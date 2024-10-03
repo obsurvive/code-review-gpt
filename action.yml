@@ -23,12 +23,18 @@ runs:
 
     - name: Install Code Review GPT
       shell: bash
-      run: npm install code-review-gpt
+      run: npm install
+      working-directory: packages/code-review-gpt
+    
+    - name: Build Code Review GPT
+      shell: bash
+      run: npm run build
+      working-directory: packages/code-review-gpt
     
     - name: Run Code Review GPT
       shell: bash
-      run: npx code-review-gpt review --ci=github --model=$MODEL
-      
+      run: node index.js review --ci=github --model=$MODEL
+      working-directory: packages/code-review-gpt/dist
       env:
         MODEL: ${{ inputs.MODEL }}
         OPENAI_API_KEY: ${{ inputs.OPENAI_API_KEY }}
